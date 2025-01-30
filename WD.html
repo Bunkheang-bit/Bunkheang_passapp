@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Calculator</title>
+    <style>
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcomeSection">
+        <h1>Welcome to the Payment Calculator</h1>
+        <button onclick="startCalculation()">Start Calculation</button>
+    </div>
+
+    <div id="calculationSection" style="display: none;">
+        <label for="distance">Distance (km):</label>
+        <input type="number" id="distance" step="0.01">
+        <button onclick="handlePayment()">Calculate</button>
+        <div id="result"></div>
+        <div id="qrCodes" style="display: none;">
+            <!-- QR codes would go here -->
+        </div>
+    </div>
+
+    <button class="mode-toggle" onclick="toggleMode()">Dark Mode</button>
+
+    <script>
+        function startCalculation() {
+            document.getElementById('welcomeSection').style.display = 'none';
+            document.getElementById('calculationSection').style.display = 'block';
+        }
+
+        function handlePayment() {
+            const distance = parseFloat(document.getElementById('distance').value);
+
+            if (isNaN(distance)) {
+                alert('Please enter a valid number for distance');
+                return;
+            }
+
+            const result = 4000 + 1500 * (distance - 1);
+            const dollars = result / 4100;
+
+            document.getElementById('result').innerHTML = `
+                <strong>Calculation Result:</strong><br>
+                Distance: ${distance.toFixed(2)} km<br>
+                Riel: ${result.toFixed(2)} Riel<br>
+                Dollar: ${dollars.toFixed(4)} USD
+            `;
+
+            document.getElementById('qrCodes').style.display = 'block';
+        }
+
+        function toggleMode() {
+            const body = document.body;
+            const modeToggle = document.querySelector('.mode-toggle');
+
+            body.classList.toggle('dark-mode');
+            modeToggle.textContent = body.classList.contains('dark-mode') ? 'Normal Mode' : 'Dark Mode';
+        }
+
+        function displayCurrentDate() {
+            // Implement this function if needed
+        }
+
+        displayCurrentDate();
+    </script>
+</body>
+</html>
